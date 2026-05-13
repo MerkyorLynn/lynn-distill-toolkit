@@ -1,0 +1,35 @@
+{"id": "v4d_000", "category": "research_long", "source": "flash", "prompt": "请对「全球大模型开源 vs 闭源博弈」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_001", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_002", "category": "tool_synth", "source": "flash", "prompt": "你是 Lynn 助理。可用工具:Bash/Read/Edit/Write/Grep/WebSearch/WebFetch/stock_market/weather/flux-studio.edit_image。判断是否需要工具,需要就调用,不需要就直接答。"}
+{"id": "v4d_003", "category": "tool_synth", "source": "pro", "prompt": "你是 Lynn 助理。可用工具:Bash/Read/Edit/Write/Grep/WebSearch/WebFetch/stock_market/weather/flux-studio.edit_image。判断是否需要工具,需要就调用,不需要就直接答。"}
+{"id": "v4d_004", "category": "research_long", "source": "flash", "prompt": "请对「苹果 AI 战略落后于谷歌微软?」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_005", "category": "research_long", "source": "pro", "prompt": "请对「中国新能源车 2025 出海格局」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_006", "category": "tool_synth", "source": "flash", "prompt": "你是 Lynn 助理。可用工具:Bash/Read/Edit/Write/Grep/WebSearch/WebFetch/stock_market/weather/flux-studio.edit_image。判断是否需要工具,需要就调用,不需要就直接答。"}
+{"id": "v4d_007", "category": "research_long", "source": "pro", "prompt": "请对「AI 对金融分析师岗位影响」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_008", "category": "research_long", "source": "pro", "prompt": "请对「全球大模型开源 vs 闭源博弈」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_009", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_010", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_011", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_012", "category": "math_algo", "source": "flash", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_013", "category": "research_long", "source": "pro", "prompt": "请对「氢能源车真的死了吗」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_014", "category": "tool_synth", "source": "pro", "prompt": "你是 Lynn 助理。可用工具:Bash/Read/Edit/Write/Grep/WebSearch/WebFetch/stock_market/weather/flux-studio.edit_image。判断是否需要工具,需要就调用,不需要就直接答。"}
+{"id": "v4d_015", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_016", "category": "research_long", "source": "pro", "prompt": "请对「中医药出海现状」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_017", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_018", "category": "general_qa", "source": "flash", "prompt": "为什么 Python GIL 存在"}
+{"id": "v4d_019", "category": "math_algo", "source": "flash", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_020", "category": "research_long", "source": "pro", "prompt": "请对「美元贬值 + 中国出口转型」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_021", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_022", "category": "research_long", "source": "flash", "prompt": "请对「印度 AI 创业崛起 vs 中国」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_023", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_024", "category": "research_long", "source": "pro", "prompt": "请对「DeepSeek 商业化路径分析」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_025", "category": "tool_synth", "source": "flash", "prompt": "你是 Lynn 助理。可用工具:Bash/Read/Edit/Write/Grep/WebSearch/WebFetch/stock_market/weather/flux-studio.edit_image。判断是否需要工具,需要就调用,不需要就直接答。"}
+{"id": "v4d_026", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "v4d_027", "category": "research_long", "source": "flash", "prompt": "请对「DeepSeek 商业化路径分析」做深度调研,要求 ≥ 2000 字,结构清晰(分章节),数据支撑,逻辑论证。"}
+{"id": "v4d_028", "category": "tool_synth", "source": "pro", "prompt": "你是 Lynn 助理。可用工具:Bash/Read/Edit/Write/Grep/WebSearch/WebFetch/stock_market/weather/flux-studio.edit_image。判断是否需要工具,需要就调用,不需要就直接答。"}
+{"id": "v4d_029", "category": "math_algo", "source": "pro", "prompt": "请仔细思考,给出严格推导和清晰解释。"}
+{"id": "s4_001", "category": "fin_holdout", "prompt": "请对小米集团 (1810.HK) 进行深度调研,从业务、财务、竞争、风险多角度分析,要求 ≥ 2000 字、结构清晰、数据支撑。"}
+{"id": "s4_002", "category": "industry_holdout", "prompt": "深度解析国产 AI 芯片产业链,涵盖技术路径、竞争格局、关键玩家、风险点,要求 ≥ 2000 字。"}
+{"id": "s4_003", "category": "company_holdout", "prompt": "请对宁德时代(300750)进行深度调研,从业务、财务、竞争、风险四个维度分析,要求 ≥ 1500 字。"}
+{"id": "s4_004", "category": "tech_holdout", "prompt": "对比 Qwen3.6-A3B 和 DeepSeek V4 在 Coding Agent 场景下的优劣,要求结构化分析,≥ 1500 字。"}
+{"id": "s4_005", "category": "macro_holdout", "prompt": "对 2026 年 Q1 中国半导体板块景气度进行深度分析,要求结构清晰、数据支撑、风险揭示,≥ 1500 字。"}

@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Environment
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Tokens / secrets
+*.token
+.token
+hf_token*
+ms_token*
+
+# Model artifacts (toolkit doesn't ship checkpoints; those are on HF/MS)
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+
+# Eval / experiment outputs
+reports/
+results/
+logs/
+nohup.out
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

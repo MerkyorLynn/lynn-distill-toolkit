@@ -1,0 +1,39 @@
+Lynn Distill Toolkit
+====================
+
+Copyright (c) 2026 Lynn / MerkyorLynn
+Licensed under the MIT License — see LICENSE.
+
+This toolkit operates on and produces derivatives of:
+
+1. **Qwen3.6-35B-A3B** by Alibaba Cloud (base model)
+   - Licensed under Apache License 2.0
+   - https://huggingface.co/Qwen/Qwen3.6-35B-A3B
+
+2. **DeepSeek V4 Flash / V4 Pro** (teacher models used in HAS data generation)
+   - DeepSeek License
+   - https://www.deepseek.com
+
+This toolkit's MIT-licensed output (Lynn V4-Pro/Flash Distill model variants)
+follows the **R1-Distill style Path B** approach:
+
+  - Distilled student model card uses MIT
+  - Base model attribution under Apache 2.0 retained
+  - Combined work is derivative of both upstream licenses
+
+For full base model license terms, see:
+- Qwen3.6: https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/main/LICENSE
+
+Components and dependencies:
+
+- `compressed-tensors` (NVFP4 v8-RTN quantization) — Apache 2.0 (Red Hat / NVIDIA)
+- `huggingface_hub` — Apache 2.0 (HuggingFace)
+- `modelscope` — Apache 2.0 (Alibaba)
+- `llama.cpp` (referenced for Q4_K_M conversion) — MIT (Georgi Gerganov / ggml-org)
+- `transformers` — Apache 2.0 (HuggingFace)
+- `peft` — Apache 2.0 (HuggingFace)
+- `LLaMA-Factory` (training framework used for V4 Distill LoRA) — Apache 2.0
+
+Each script file may include further attribution in its docstring where it
+directly references prior art (e.g., evaluation rubric inspired by HumanEval,
+4-gate framework derived from internal Lynn rigor practices).
