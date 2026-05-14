@@ -55,6 +55,45 @@ python eval/four_gate_eval.py \
 
 Expected verdict for Lynn-V4-Pro: `NET_WIN, net_score +40.00pp` (see [reports/](https://huggingface.co/nerkyor/Lynn-V4-Pro-Distill-Qwen-35B-A3B/tree/main/reports) in the model repo).
 
+### Supplementary V8/V9 v4 — 3-way serving comparison (2026-05-14)
+
+After ship we ran a 75-question Lynn daily-mix eval (`v8_tool_calling` 15 + `v9_holdout` 8 + `v9_probe_expanded` 52) against three serving configurations of Lynn-V4-Pro. The grader uses string-match + N-of-M token fallback + LaTeX normalization (v4 grader, [details](eval/)).
+
+| Suite | NVFP4 v8-RTN nothink (production) | NVFP4 v8-RTN thinking=True | Q4_K_M (GGUF default thinking) |
+|---|---|---|---|
+| V8 tool calling | **15/15 (100.0%)** | 14/15 (93.3%) | 15/15 (100.0%) |
+| V9 holdout | 5/8 (62.5%) | 6/8 (75.0%) | **8/8 (100.0%)** |
+| V9 expanded | 46/52 (88.5%) | 49/52 (94.2%) | **51/52 (98.1%)** |
+| **TOTAL** | **66/75 (88.0%)** | **69/75 (92.0%)** | **74/75 (98.7%)** |
+
+⚠️ **Q4_K_M's 6.7pp lead over NVFP4-thinking is chat_template wrap, not quantization quality.** Same Lynn V4-Pro weights, same prompts, same `temperature=0`, same 4096-token max output. GGUF embeds a more concise thinking template than SGLang's `chat_template.jinja`; within budget, Q4 reaches the answer while NVFP4 hits the ceiling mid-derivation.
+
+Sampled cases where Q4 PASS / NVFP4-think FAIL:
+
+| qid | NVFP4 think tokens | Q4 tokens | What happened |
+|---|---|---|---|
+| v9_002 (gold 540) | **4096 ⚠️ truncated** | 3868 | NVFP4 stuck on `324cosθ-432sinθ`, never computed `sqrt(324²+432²)` |
+| v9_008 (gold 0.48 eV) | **4096 ⚠️ truncated** | **668** ✓ | NVFP4 unwinding `hc/λ`; Q4 reached `K_max=0.4816 eV` cleanly |
+| v9p_aime_001 (gold 468) | **4096 ⚠️ truncated** | **1796** ✓ | NVFP4 mid-coordinate; Q4 reached area=468 |
+| v9p_fin_005 (gold 957.88) | **4096 ⚠️ truncated** | **929** ✓ | NVFP4 stuck verifying; Q4 computed bond price |
+
+Raw JSONs: [`evaluation/`](https://huggingface.co/nerkyor/Lynn-V4-Pro-Distill-Qwen-35B-A3B-NVFP4-v8-RTN/tree/main/evaluation) on the v8-RTN HF repo.
+
+### Throughput — TPS suite (Spark GB10 sm_121, 2026-05-14)
+
+| Configuration | Single TPS (avg) | TTFT (avg) | N=4 aggregate | N=16 aggregate |
+|---|---|---|---|---|
+| NVFP4 v8-RTN @ SGLang dev-cu13 (production, no MTP) | **58.7 tok/s** | **81 ms** | **220 tok/s** | **599 tok/s** |
+| NVFP4 v8-RTN @ SGLang + MTP NEXTN | 28.4 tok/s ⚠️ -52% | 175 ms | 81 tok/s | 235 tok/s |
+| Q4_K_M @ llama.cpp sm_121 (--parallel 16) | **74.9 tok/s** | 122 ms | 89 tok/s ⚠️ | 252 tok/s |
+
+Notes:
+- **NVFP4 wins multi-user serving by 2-3x at N≥4** (SGLang continuous batching) — use for Lynn brain / shared inference
+- **Q4_K_M wins single-stream by 27%** but `--parallel` is slot-multiplexing (not true continuous batching); N=4 aggregate regresses below N=2 — use for consumer single-user
+- **MTP NEXTN slows V4-Pro by 50-60% across all metrics** because the model was distilled without MTP head weights — drafts are rejected. Production config = no MTP.
+- Long-context: NVFP4 32K input → 48.4 tok/s ✓; Q4 32K input fails with HTTP 400 (llama.cpp `ctx-size` handling differs)
+- `首先...` Chinese thinking-prefix injection has **no perf impact** (directional only) — same TPS as baseline on both backends
+
 ## Ship gate — preventing silent failure
 
 The `pipeline/post_quant_pack.sh` wrapper exists because of a **real ship-blocker** we hit:
