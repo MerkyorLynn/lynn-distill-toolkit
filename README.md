@@ -116,6 +116,40 @@ Any gate fail → exit 1, ship blocked. See script for details.
 | NVFP4 v8-RTN | [nerkyor/...-NVFP4-v8-RTN](https://huggingface.co/nerkyor/Lynn-V4-Pro-Distill-Qwen-35B-A3B-NVFP4-v8-RTN) | [Merkyor/...-NVFP4-v8-RTN](https://modelscope.cn/models/Merkyor/Lynn-V4-Pro-Distill-Qwen-35B-A3B-NVFP4-v8-RTN) |
 | Q4_K_M GGUF | [nerkyor/...-Q4_K_M](https://huggingface.co/nerkyor/Lynn-V4-Pro-Distill-Qwen-35B-A3B-Q4_K_M) | [Merkyor/...-Q4_K_M](https://modelscope.cn/models/Merkyor/Lynn-V4-Pro-Distill-Qwen-35B-A3B-Q4_K_M) |
 
+## Related: Lynn Engine — P1-P2 passed (2026-05-14)
+
+The downstream serving runtime for Lynn V4-Pro and the upcoming Lynn-27B-A3B (MoE-pruned). Independent of SGLang / vLLM / TRT-LLM / llama.cpp.
+
+**Status (Branch `phase4/reference-workload`, commits `e4bb9d5 → 7c7f735`)**:
+
+- ✅ **P1 — Loader** + standalone forward path. Reads safetensors blob + parses `quantization_config` directly. Bypasses `transformers.AutoModelForX` — immune to the modelopt scale-key issue that silently random-inits experts in 4 mainstream serving engines.
+- ✅ **P2 — Reference parity + serving loop closed**:
+  - 40-layer BF16 + NVFP4 v8-RTN prefill + logits parity (cosine **0.99591**, top-10 overlap **90%**)
+  - Incremental decode parity + KV cache + linear-attention recurrent state
+  - **Resident runner** (load once, run many): **13.1 tok/s** single-stream slow-path baseline
+  - **CLI entry** (P2-I, commit `e1aa5b4`): BF16 12.80 / NVFP4 12.62 tok/s
+  - **OpenAI-compatible HTTP server** (P2-J `a593795` + P2-K `7c7f735`): `/health` + `/v1/chat/completions` + `/v1/completions` on both quant tracks
+  - Same `LynnIncrementalRunner` powers CLI + HTTP — one decode codebase across all quant formats
+- 🔜 **P3 — native FP4 GEMM** (active focus, R6000 deadline 2026-05-17):
+  - Replace dequant→BF16→matmul with **direct Blackwell FP4 tensor-core matmul**
+  - Starts from single Linear / single MoE expert microkernel, verified against reference
+  - Target: 30-50 tok/s single-stream (from current 13.1), 200+ tok/s N=4 aggregate
+
+**Validation baseline (locked in P2)**:
+
+| Metric | Threshold | Lynn engine measured |
+|---|---|---|
+| logits cosine | ≥ 0.995 | **0.99591** ✓ |
+| top-10 overlap | ≥ 90% | **90%** ✓ |
+| greedy parity, margin > 0.5 tokens | 100% match | 3/4 exact (1 close-margin tiebreaker) |
+| Resident throughput (slow path) | — | 13.1 tok/s |
+
+**Why this matters here**: the V4-Pro Distill ship pipeline (this toolkit) currently exits to HF / ModelScope, then relies on SGLang dev-cu13 for production serving (NVFP4 v8-RTN path). Once Lynn engine P3 reaches production-grade throughput, that's a possible **first-party serving runtime**: same correctness oracle this toolkit uses for ship-gate (4-gate eval), now also the inference target — closing the loop from `train → distill → quantize → eval → ship → serve` inside one stack we control.
+
+For the upcoming **Lynn-27B-A3B (MoE-pruned)** variant, this matters even more — pruned expert layouts can be validated through Lynn engine's `format-agnostic loader + reference parity + 4-gate eval` chain without waiting for vLLM / SGLang upstream support. **Prune cycle goes from "wait one month for upstream" to "engine verifies in a week"**.
+
+Detailed retrospective on the Zhihu serial: [https://zhuanlan.zhihu.com/p/2036443846322680848](https://zhuanlan.zhihu.com/p/2036443846322680848) (continuously updated).
+
 ## Related toolkits
 
 - **[MerkyorLynn/qwen3.6-nvfp4-toolkit](https://github.com/MerkyorLynn/qwen3.6-nvfp4-toolkit)** — NVFP4 quantization recipe (v8-RTN compressed-tensors + modelopt_fp4 calibration). Used to produce the v8-RTN variant referenced above.
